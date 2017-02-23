@@ -18,4 +18,6 @@ class FrontController extends Controller
 
         $this->view('front.show', compact("post"));
     }
+
+    // todo page about
 }

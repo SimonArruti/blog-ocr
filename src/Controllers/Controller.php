@@ -5,6 +5,13 @@ namespace App\Controllers;
 
 class Controller
 {
+    public function __construct()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    }
+
     protected function view ($filepath, array $data = []) {
 
         $file = __DIR__ . "/../../resources/Views/" . str_replace('.', '/', $filepath) . ".php";
@@ -13,13 +20,12 @@ class Controller
         include_once $file;
     }
 
-    protected function redirect ($path) {
+    public function redirect ($path) {
         header("Location:" . URL . $path);
 
         return $this;
     }
     protected function withMessage ($type, $message, $subtype = null) {
-        session_start();
         $this->session($type, $message, $subtype);
     }
 

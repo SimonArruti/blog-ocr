@@ -5,12 +5,25 @@ namespace App\Models\Auth;
 
 class Login
 {
+    public function __construct()
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    }
+
     public static function login ($user_data) {
-        session_start();
 
         $_SESSION['is_online'] = true;
         $_SESSION['name'] = $user_data->username;
         $_SESSION['email'] = $user_data->email;
+
+        if ($user_data->role === "admin") {
+            $_SESSION['role'] = "admin";
+        }
+        else {
+            $_SESSION['role'] = $user_data->role;
+        }
     }
 
     public static function checkLogin (array $user_data) {
@@ -79,8 +92,7 @@ class Login
     }
 
     public static function logout () {
-        session_start();
-        if ($_SESSION) {
+        if (isset($_SESSION) ){
             session_destroy();
         }
     }
