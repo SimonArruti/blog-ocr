@@ -2,11 +2,11 @@
 
 namespace App\Middlewares;
 
-use App\Controllers\Controller;
+use App\Helpers\Helpers;
 
-class AdminMiddleware extends Controller {
-
-    //private $is_admin = false;
+class AdminMiddleware
+{
+    use Helpers;
 
     public function handleAdmin () {
         if (isset($_SESSION['is_online'])) {

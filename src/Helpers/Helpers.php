@@ -1,9 +1,7 @@
 <?php
+namespace App\Helpers;
 
-namespace App\Controllers;
-
-
-class Controller
+trait Helpers
 {
     public function __construct()
     {

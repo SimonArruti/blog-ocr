@@ -2,13 +2,15 @@
 
 namespace App\Controllers\Auth;
 
-use App\Controllers\Controller;
+use App\Helpers\Helpers;
 use App\Models\Auth\Login;
 use App\Models\Auth\Register;
 use App\Validation\Validation;
 
-class AuthController extends Controller
+class AuthController
 {
+    use Helpers;
+
     public function registerPage () {
         if (isset($_SESSION['is_online'])) {
             $this->redirect("/");
@@ -21,7 +23,8 @@ class AuthController extends Controller
         $user_data_OK = array(
             "username" => htmlspecialchars($user_data['username']),
             "email" => htmlspecialchars($user_data['email']),
-            "password" => htmlspecialchars($user_data['password'])
+            "password" => htmlspecialchars($user_data['password']),
+            "c-password" => htmlentities(($user_data['c-password']))
         );
 
         $check = Register::registerUser(new Validation(), $user_data_OK);
@@ -39,7 +42,7 @@ class AuthController extends Controller
         }
 
         if (isset($check["error_password"]) && $check['error_password'] === true) {
-            $this->redirect('/register')->withMessage("register_error", "Le mot de passe doit respecter les restrictions suivantes: au moins 8 caractères, au moins une majuscule, au moins une minuscule et au moins un chiffre.", "password");
+            $this->redirect('/register')->withMessage("register_error", "Les deux mots de passe doivent être identiques et doivent respecter les restrictions suivantes: au moins 8 caractères, au moins une majuscule, au moins une minuscule et au moins un chiffre.", "password");
 
             return;
         }
@@ -57,8 +60,8 @@ class AuthController extends Controller
     public function login (array $user_data) {
 
         $user_data_to_check = array(
-            "email" => htmlspecialchars($user_data['email']),
-            "password" => htmlspecialchars($user_data['password'])
+            "email" => htmlentities($user_data['email']),
+            "password" => htmlentities($user_data['password'])
         );
 
         $user = Login::checkLogin($user_data_to_check);

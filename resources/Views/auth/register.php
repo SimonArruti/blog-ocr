@@ -28,5 +28,8 @@ else if (isset($_SESSION['messages']['register_error']['password']) && $_SESSION
     <label>Mot de passe</label>
     <input type="password" name="password">
 
+    <label>Confirmation de mot de passe</label>
+    <input type="password" name="c-password">
+
     <button type="submit">Valider</button>
 </form>

@@ -8,11 +8,14 @@
 
 namespace App\Controllers\Post;
 
-use App\Controllers\Controller;
+use App\Helpers\Helpers;
 use App\Models\Post;
 
-class PostController extends Controller
+class PostController
+
 {
+    use Helpers;
+
     public function index () {
         $posts = Post::getAllPosts();
 

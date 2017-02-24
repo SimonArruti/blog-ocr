@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
-
+use App\Helpers\Helpers;
 use App\Models\Post;
 
-class FrontController extends Controller
+class FrontController
 {
+    use Helpers;
+
     public function index () {
         $posts = Post::getAllPosts();
 

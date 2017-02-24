@@ -17,10 +17,11 @@ class Register
         $name = $user_data['username'];
         $email = $user_data['email'];
         $password = $user_data['password'];
+        $c_password = $user_data['c-password'];
 
         $name_check = self::checkIfPseudoExists($name);
         $email_check = self::checkIfEmailExists($email);
-        $password_check = self::checkIfPasswordFit($password);
+        $password_check = self::checkIfPasswordFit($password, $c_password);
 
         if (!$name_check) {
             return array("error_name" => self::$error_pseudo);
@@ -91,10 +92,10 @@ class Register
 
     }
 
-    private static function checkIfPasswordFit ($password) {
+    private static function checkIfPasswordFit ($password, $c_password) {
         $regexp = '/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$/';
 
-        if (preg_match($regexp, $password) == 1) {
+        if (preg_match($regexp, $password) == 1 && $password === $c_password) {
             self::$error_password = false;
 
             return true;
