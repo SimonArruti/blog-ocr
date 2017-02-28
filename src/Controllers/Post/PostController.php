@@ -10,11 +10,20 @@ namespace App\Controllers\Post;
 
 use App\Helpers\Helpers;
 use App\Models\Post;
+use App\Validation\Validation;
+use GUMP;
 
 class PostController
 
 {
     use Helpers;
+
+    private $validation;
+
+    public function __construct()
+    {
+        $this->validation = new Validation();
+    }
 
     public function index () {
         $posts = Post::getAllPosts();
@@ -27,16 +36,27 @@ class PostController
     }
 
     public function store (array $data) {
-        $data_OK = array(
-            "title" => htmlentities($data['title']),
-            "abstract" => htmlentities($data['abstract']),
-            "content" => htmlentities($data['content'])
-        );
 
-        Post::addPost($data_OK);
+        $is_valid_store = GUMP::is_valid($data, array(
+            "title" => "required|min_len,2|min_len,50",
+            "abstract" => "required|min_len,2",
+            "content" => "required|min_len,2"
+        ));
 
-        $this->redirect("/admin/posts/list");
+        if ($is_valid_store === true) {
+            $data_OK = array(
+                "title" => htmlentities($data['title']),
+                "abstract" => htmlentities($data['abstract']),
+                "content" => htmlentities($data['content'])
+            );
 
+            Post::addPost($data_OK);
+
+            $this->redirect("/admin/posts/list");
+        }
+        else {
+            $this->redirect("/admin/posts/create")->withMessage("crud", "Les données envoyées ne correspondent pas aux restrictions des champs.", "create");
+        }
     }
 
     public function edit ($id) {
@@ -46,15 +66,28 @@ class PostController
     }
 
     public function update ($id, array $data) {
-        $data_OK = array(
-            "title" => $data['title'],
-            "abstract" => $data['abstract'],
-            "content" => $data['content']
-        );
+        $is_valid_update = GUMP::is_valid($data, array(
+            "title" => "required|min_len,2|max_len,50",
+            "abstract" => "required|min_len,2",
+            "content" => "required|min_len,2"
+        ));
 
-        Post::updatePost($id, $data_OK);
+        if ($is_valid_update === true) {
+            $data_OK = array(
+                "title" => $data['title'],
+                "abstract" => $data['abstract'],
+                "content" => $data['content']
+            );
 
-        $this->redirect("/admin/posts/list");
+            Post::updatePost($id, $data_OK);
+
+            $this->redirect("/admin/posts/list");
+        }
+        else {
+            $this->redirect("/admin/posts/edit/" . $id)->withMessage("crud", "Les données envoyées ne correspondent pas aux restrictions des champs.", "update");
+        }
+
+
     }
 
     public function delete ($id) {

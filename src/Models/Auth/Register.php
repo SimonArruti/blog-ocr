@@ -2,15 +2,13 @@
 
 namespace App\Models\Auth;
 
-use App\Validation\Validation;
-
 class Register
 {
     private static $error_pseudo;
     private static $error_email;
     private static $error_password;
 
-    public static function registerUser (Validation $validation, array $user_data) {
+    public static function registerUser (array $user_data) {
 
         global $bdd;
 
@@ -33,7 +31,7 @@ class Register
             return array("error_password" => self::$error_password);
         }
         if ($name_check && $email_check && $password_check) {
-            $password = $validation->hash_password($password);
+            $password = self::hash_password($password);
 
             $prepare = $bdd->connection()->prepare('
                 INSERT INTO users(username, email, password) 
@@ -93,7 +91,7 @@ class Register
     }
 
     private static function checkIfPasswordFit ($password, $c_password) {
-        $regexp = '/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$/';
+        $regexp = '/^((?=\S*?[A-Z])(?=\S*?[a-éz])(?=\S*?[0-9]).{8,})\S$/';
 
         if (preg_match($regexp, $password) == 1 && $password === $c_password) {
             self::$error_password = false;
@@ -105,5 +103,9 @@ class Register
 
             return false;
         }
+    }
+
+    private static function hash_password (string $password_brut) {
+        return password_hash($password_brut, PASSWORD_BCRYPT);
     }
 }

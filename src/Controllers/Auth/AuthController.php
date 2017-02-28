@@ -27,7 +27,7 @@ class AuthController
             "c-password" => htmlentities(($user_data['c-password']))
         );
 
-        $check = Register::registerUser(new Validation(), $user_data_OK);
+        $check = Register::registerUser($user_data_OK);
 
         if (isset($check["error_name"]) && $check['error_name'] === true) {
             $this->redirect('/register')->withMessage("register_error", "Ce pseudo est déjà utilisé.", "pseudo");

@@ -18,7 +18,7 @@ trait Helpers
         include_once $file;
     }
 
-    public function redirect ($path) {
+    protected function redirect ($path) {
         header("Location:" . URL . $path);
 
         return $this;

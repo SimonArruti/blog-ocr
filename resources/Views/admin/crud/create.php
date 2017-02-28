@@ -1,5 +1,11 @@
 <h1>Create</h1>
 
+<?php if (isset($_SESSION['messages']['crud']['create']) && $_SESSION['messages']['crud']['create'] != "") {
+    echo "<p>" . $_SESSION['messages']['crud']['create'] . "</p>";
+
+    $_SESSION['messages']['crud']['create'] = "";
+} ?>
+
 <a href="<?= URL . '/admin/posts' ?>">Retour aux posts</a>
 
 <form action="<?= URL . '/admin/posts/store' ?>" method="post">

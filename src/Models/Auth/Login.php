@@ -92,7 +92,7 @@ class Login
     }
 
     public static function logout () {
-        if (isset($_SESSION) ){
+        if (isset($_SESSION) ) {
             session_destroy();
         }
     }

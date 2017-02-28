@@ -50,8 +50,7 @@ if ($method === "GET") {
             break;
 
         case preg_match('#' . $admin_uri . '(/?)$#', $uri) == 1 :
-            $ctrl = new \App\Controllers\Controller();
-            $ctrl->redirect("/admin/posts");
+            header("Location:" . URL .  "/admin/posts");
 
             break;
 
