@@ -54,12 +54,6 @@ if ($method === "GET") {
 
         // ---------- ROUTES GET COMMENTS ---------- //
 
-        case preg_match('#' . $base_uri . '/(comments\/warn\/([1-9][0-9]*)\/([1-9][0-9]*))#', $uri, $matched) == 1 :
-            $ctrl = new CommentController();
-            $ctrl->warn($matched[2], $matched[3]);
-
-            break;
-
         // ---------- ROUTES GET ADMIN ----------- //
 
         case preg_match('#' . $admin_uri . '(/?)$#', $uri) == 1 :
@@ -135,6 +129,12 @@ if ($method === "POST") {
         case preg_match('#' . $base_uri . '/(comments\/add\/([1-9][0-9]*))#', $uri, $matched) == 1 :
             $ctrl = new CommentController();
             $ctrl->add($matched[2], $_POST);
+
+            break;
+
+        case preg_match('#' . $base_uri . '/(comments\/warn\/([1-9][0-9]*)\/([1-9][0-9]*))#', $uri, $matched) == 1 :
+            $ctrl = new CommentController();
+            $ctrl->warn($matched[2], $matched[3]);
 
             break;
 

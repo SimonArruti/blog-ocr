@@ -13,7 +13,6 @@ class FrontController
 
     public function index () {
         $posts = Post::getAllPosts();
-        $ip = $this->userIP();
 
         $this->view('front.home', compact("posts", "ip"));
     }

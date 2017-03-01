@@ -38,7 +38,9 @@
         <h4><?= $comment->author ?></h4>
         <p><?= $comment->message ?></p>
         <?php if (isset($_SESSION['is_online'])) : ?>
-            <a href="<?= URL . '/comments/warn/' . $post->id . '/' . $comment->id ?>">Signaler le commentaire</a>
+            <form action="<?= URL . '/comments/warn/' . $post->id . '/' . $comment->id ?>" method="post">
+                <button type="submit">Signaler le commentaire</button>
+            </form>
         <?php endif ?>
     <?php endforeach ?>
 
