@@ -6,7 +6,7 @@
     $_SESSION['messages']['crud']['create'] = "";
 } ?>
 
-<a href="<?= URL . '/admin/posts' ?>">Retour aux posts</a>
+<a href="<?= URL . '/admin/posts' ?>">Retour au dashboard</a>
 
 <form action="<?= URL . '/admin/posts/store' ?>" method="post">
     <label>Titre</label>

@@ -11,4 +11,8 @@ class User
     {
         $this->comment = new Comment();
     }
+
+    public function addComment () {
+
+    }
 }

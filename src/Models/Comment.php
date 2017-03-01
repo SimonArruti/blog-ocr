@@ -23,4 +23,42 @@ class Comment
         return $results;
 
     }
+
+    public static function addComment ($user_id, $post_id, $user, $message) {
+        global $bdd;
+
+        $query = $bdd->connection()->prepare("INSERT INTO comments(user_id, post_id, author, message, published_at) VALUES (:userid, :postid, :author, :message, NOW())");
+
+        $query->execute(array(
+            "userid" => $user_id,
+            "postid" => $post_id,
+            "author" => $user,
+            "message" => $message
+        ));
+
+    }
+
+    public static function warnComment ($id) {
+        global $bdd;
+
+        $query = $bdd->connection()->prepare("UPDATE comments SET warning = 1 WHERE id = :id");
+        $query->execute(array("id" => $id));
+
+    }
+
+    public static function getWarnComments () {
+        global $bdd;
+
+        $query = $bdd->connection()->query("SELECT * FROM comments WHERE warning = 1");
+        $results = $query->fetchAll(\PDO::FETCH_OBJ);
+
+        return $results;
+    }
+
+    public static function deleteComment ($id) {
+        global $bdd;
+
+        $query = $bdd->connection()->prepare("DELETE FROM comments WHERE id = :id");
+        $query->execute(array("id" => $id));
+    }
 }

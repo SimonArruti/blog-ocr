@@ -15,6 +15,7 @@ class Login
     public static function login ($user_data) {
 
         $_SESSION['is_online'] = true;
+        $_SESSION['user_id'] = $user_data->id;
         $_SESSION['name'] = $user_data->username;
         $_SESSION['email'] = $user_data->email;
 

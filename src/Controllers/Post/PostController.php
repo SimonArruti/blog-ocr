@@ -18,13 +18,6 @@ class PostController
 {
     use Helpers;
 
-    private $validation;
-
-    public function __construct()
-    {
-        $this->validation = new Validation();
-    }
-
     public function index () {
         $posts = Post::getAllPosts();
 

@@ -14,4 +14,8 @@
 <ul>
     <li><a href="<?= URL . '/admin/posts/create' ?>">Create</a></li>
     <li><a href="<?= URL . '/admin/posts/list' ?>">Liste des posts</a></li>
+    <li><a href="<?= URL . '/admin/posts/comments' ?>">
+            Commentaire signalés <?php if ($count != 0) echo "(" . $count . ")" ?>
+        </a>
+    </li>
 </ul>
