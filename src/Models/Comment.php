@@ -15,7 +15,7 @@ class Comment
 
         global $bdd;
 
-        $query = $bdd->connection()->prepare("SELECT * from comments WHERE post_id = :id");
+        $query = $bdd->connection()->prepare("SELECT * from comments WHERE post_id = :id AND warning = 0");
         $query->execute(array("id" => $id));
 
         $results = $query->fetchAll(\PDO::FETCH_OBJ);
@@ -44,6 +44,13 @@ class Comment
         $query = $bdd->connection()->prepare("UPDATE comments SET warning = 1 WHERE id = :id");
         $query->execute(array("id" => $id));
 
+    }
+
+    public static function unWarnComment ($id) {
+        global $bdd;
+
+        $query = $bdd->connection()->prepare("UPDATE comments SET warning = 0 WHERE id = :id");
+        $query->execute(array("id" => $id));
     }
 
     public static function getWarnComments () {

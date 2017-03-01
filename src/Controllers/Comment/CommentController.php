@@ -30,6 +30,12 @@ class CommentController {
         }
     }
 
+    public function restore ($id) {
+        Comment::unWarnComment($id);
+
+        $this->redirect("/admin/posts/comments")->withMessage("comments", "Le commentaire a bien été restauré.", "restore");
+    }
+
     public function delete ($id) {
         Comment::deleteComment($id);
 

@@ -1,4 +1,4 @@
-<h1>Commentaires signalés</h1>
+<h1>Modérer les commentaires</h1>
 
 <a href="<?= URL . '/admin/posts' ?>">Retour au dashboard</a>
 
@@ -7,7 +7,12 @@
 
     $_SESSION['messages']['comments']['delete'] = "";
 }
+?>
+<?php if (isset($_SESSION['messages']['comments']['restore']) && $_SESSION['messages']['comments']['restore'] != "") {
+    echo "<p>" . $_SESSION['messages']['comments']['restore'] . "</p>";
 
+    $_SESSION['messages']['comments']['restore'] = "";
+}
 ?>
 
 <?php if (!empty($comments)) : ?>
@@ -16,6 +21,9 @@
         <p><?= $comment->message ?></p>
         <form action="<?= URL . '/admin/posts/comments/delete/' . $comment->id ?>" method="post">
             <button type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ?')">Supprimer le commentaire</button>
+        </form>
+        <form action="<?= URL . '/admin/posts/comments/restore/' . $comment->id ?>" method="post">
+            <button type="submit">Restaurer le commentaire</button>
         </form>
     <?php endforeach ?>
 

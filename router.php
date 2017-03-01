@@ -176,5 +176,14 @@ if ($method === "POST") {
 
             break;
 
+        case preg_match('#' . $admin_uri . '/(posts\/comments\/restore\/([1-9][0-9]*))#', $uri, $matched) == 1 :
+            $is_admin = $admin_middleware->handleAdmin();
+            if ($is_admin) {
+                $ctrl = new CommentController();
+                $ctrl->restore($matched[2]);
+            }
+
+            break;
+
     }
 }
