@@ -9,14 +9,32 @@ class CommentController {
 
     use Helpers;
 
-    public function add ($post_id, $comment) {
-        $comment = htmlentities($comment['message']);
+    public function add ($post_id, $data) {
+        if ($data['message'] === '') {
+            $this->redirect("/posts/" . $post_id)->withMessage("comments", "Le commentaire ne doit pas être vide !", "empty");
+
+            return;
+        }
+
+        $comment = htmlentities($data['message']);
         $user_id = $_SESSION['user_id'];
         $username = $_SESSION['name'];
 
-        Comment::addComment($user_id, $post_id, $username, $comment);
+        if (!isset($data['reply_id'])) {
+            Comment::addComment($user_id, $post_id, $username, $comment);
 
-        $this->redirect("/posts/" . $post_id);
+            $this->redirect("/posts/" . $post_id);
+
+            return;
+        }
+        else {
+            $reply_id = $data['reply_id'];
+            Comment::addReplyToComment($user_id, $post_id, $reply_id, $username, $comment);
+
+            $this->redirect("/posts/" . $post_id);
+
+            return;
+        }
     }
 
     public function warn ($post_id, $comment_id) {

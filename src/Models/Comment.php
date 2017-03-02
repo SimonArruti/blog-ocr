@@ -15,7 +15,12 @@ class Comment
 
         global $bdd;
 
-        $query = $bdd->connection()->prepare("SELECT * from comments WHERE post_id = :id AND warning = 0");
+        $query = $bdd->connection()->prepare('
+            SELECT id, author, message, reply_id, DATE_FORMAT(published_at, \'%d/%m/%Y, à %Hh%i\') 
+            AS date 
+            FROM comments 
+            WHERE post_id = :id 
+            AND warning = 0');
         $query->execute(array("id" => $id));
 
         $results = $query->fetchAll(\PDO::FETCH_OBJ);
@@ -36,6 +41,20 @@ class Comment
             "message" => $message
         ));
 
+    }
+
+    public static function addReplyToComment ($user_id, $post_id, $reply_id, $user, $message) {
+        global $bdd;
+
+        $query = $bdd->connection()->prepare("INSERT INTO comments(user_id, post_id, reply_id, author, message, published_at) VALUES (:userid, :postid, :replyid, :author, :message, NOW())");
+
+        $query->execute(array(
+            "userid" => $user_id,
+            "postid" => $post_id,
+            "replyid" => $reply_id,
+            "author" => $user,
+            "message" => $message
+        ));
     }
 
     public static function warnComment ($id) {

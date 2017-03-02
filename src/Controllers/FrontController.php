@@ -24,5 +24,9 @@ class FrontController
         $this->view('front.show', compact("post", "comments"));
     }
 
+    public function account ($id) {
+        $this->view("user.account", compact("id"));
+    }
+
     // todo page about
 }

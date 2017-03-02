@@ -32,6 +32,12 @@ if ($method === "GET") {
 
             break;
 
+        case preg_match('#' . $base_uri . '/user\/([1-9][0-9]*)\/account#', $uri, $matched) == 1 :
+            $ctrl = new FrontController();
+            $ctrl->account($matched[1]);
+
+            break;
+
         // ---------- ROUTES GET LOGIN ---------- //
 
         case $base_uri . "/login" :
@@ -127,6 +133,12 @@ if ($method === "POST") {
         // ---------- ROUTES POST COMMENTS ---------- //
 
         case preg_match('#' . $base_uri . '/(comments\/add\/([1-9][0-9]*))#', $uri, $matched) == 1 :
+            $ctrl = new CommentController();
+            $ctrl->add($matched[2], $_POST);
+
+            break;
+
+        case preg_match('#' . $base_uri . '/(comments\/add\/reply\/([1-9][0-9]*))#', $uri, $matched) == 1 :
             $ctrl = new CommentController();
             $ctrl->add($matched[2], $_POST);
 

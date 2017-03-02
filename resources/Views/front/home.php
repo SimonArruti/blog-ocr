@@ -11,6 +11,7 @@
         <?php if ($_SESSION['role'] === "admin") : ?>
             <a href=<?= URL . '/admin' ?>>Administration</a>
         <?php endif ?>
+        <a href=<?= URL . '/user/'. $_SESSION['user_id'] .'/account' ?>>Mon compte</a>
         <a href=<?= URL . '/logout' ?>>Déconnexion</a>
     <?php else : ?>
         <a href=<?= URL . '/login' ?>>Connexion</a>
