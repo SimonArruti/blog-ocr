@@ -19,13 +19,17 @@ class FrontController
 
     public function show ($id) {
         $post = Post::getSinglePost($id);
-        $comments = Comment::getAllCommentsByPost($id);
+        $comments = Comment::getAllCommentsWithChildren($id);
 
         $this->view('front.show', compact("post", "comments"));
     }
 
     public function account ($id) {
-        $this->view("user.account", compact("id"));
+        $user = new User($id);
+        $email = $user->getEmail();
+
+        $this->view("user.account", compact("id", "email"));
+
     }
 
     // todo page about

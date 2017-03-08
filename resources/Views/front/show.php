@@ -48,24 +48,10 @@ if (isset($_SESSION['messages']['comments']['empty']) && $_SESSION['messages']['
     <p>Aucun commentaire</p>
 <?php else : ?>
 
+
     <?php foreach ($comments as $comment) : ?>
 
-        <h4><?= $comment->author ?></h4>
-        <strong>Le <?= $comment->date ?></strong>
-        <p><?= $comment->message ?></p>
-        <p><?= $comment->reply_id ?></p>
-
-        <?php if (isset($_SESSION['is_online'])) : ?>
-
-            <form id="form-comment" action="<?= URL . '/comments/warn/' . $post->id . '/' . $comment->id ?>" method="post">
-                <button type="submit">Signaler le commentaire</button>
-            </form>
-            <div>
-                <button type="submit" class="reply" data-id="<?= $comment->id ?>">Répondre</button>
-                <div id="cache"></div>
-            </div>
-
-        <?php endif ?>
+        <?php require(__DIR__ . "/../comments/comments_front.php") ?>
 
     <?php endforeach ?>
 

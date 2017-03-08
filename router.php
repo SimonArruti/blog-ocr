@@ -4,6 +4,7 @@ use App\Controllers\FrontController;
 use App\Middlewares\AdminMiddleware;
 use App\Controllers\Auth\AuthController;
 use App\Controllers\Post\PostController;
+use App\Controllers\User\UserController;
 use App\Controllers\Admin\AdminController;
 use App\Controllers\Comment\CommentController;
 
@@ -116,7 +117,13 @@ if ($method === "POST") {
 
     switch ($uri) {
 
-        // ---------- ROUTES POST LOGIN ---------- //
+        case preg_match('#' . $base_uri . '/user\/([1-9][0-9]*)\/account#', $uri, $matched) == 1 :
+            $ctrl = new UserController();
+            $ctrl->modify_infos($_POST);
+
+            break;
+
+            // ---------- ROUTES POST LOGIN ---------- //
 
         case $base_uri . "/login" :
             $ctrl = new AuthController();

@@ -23,10 +23,33 @@ class Comment
             AND warning = 0');
         $query->execute(array("id" => $id));
 
-        $results = $query->fetchAll(\PDO::FETCH_OBJ);
+        $comments = $query->fetchAll(\PDO::FETCH_OBJ);
 
-        return $results;
+        $comments_by_id = [];
 
+        foreach ($comments as $comment) {
+            $comments_by_id[$comment->id] = $comment;
+        }
+
+        return $comments_by_id;
+    }
+
+    public static function getAllCommentsWithChildren($post_id, $unset_children = true)
+    {
+        $comments = $comments_by_id = self::getAllCommentsByPost($post_id);
+
+        foreach ($comments as $id => $comment) {
+
+            if ($comment->reply_id != null) {
+                $comments_by_id[$comment->reply_id]->children[] = $comment;
+
+                if ($unset_children) {
+                    unset($comments[$id]);
+                }
+            }
+        }
+
+        return $comments;
     }
 
     public static function addComment ($user_id, $post_id, $user, $message) {
