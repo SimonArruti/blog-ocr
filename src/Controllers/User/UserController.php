@@ -21,6 +21,8 @@ class UserController
                 $user->setEmail($email);
 
                 $_SESSION['email'] = $email;
+
+                $this->redirect("/");
             }
 
             if (isset($data['old-password']) && isset($data['new-password']) && isset($data['c-new-password'])) {

@@ -23,15 +23,21 @@ class CommentController {
         if (!isset($data['reply_id'])) {
             Comment::addComment($user_id, $post_id, $username, $comment);
 
-            $this->redirect("/posts/" . $post_id);
+            $this->redirect("/posts/" . $post_id)->withMessage("comments", "Votre commentaire a bien été ajouté.", "success");
 
             return;
         }
         else {
+            if ($data['message'] === '') {
+                $this->redirect("/posts/" . $post_id)->withMessage("comments", "Le commentaire ne doit pas être vide !", "empty");
+
+                return;
+            }
+
             $reply_id = $data['reply_id'];
             Comment::addReplyToComment($user_id, $post_id, $reply_id, $username, $comment);
 
-            $this->redirect("/posts/" . $post_id);
+            $this->redirect("/posts/" . $post_id)->withMessage("comments", "Votre commentaire a bien été ajouté.", "success");
 
             return;
         }

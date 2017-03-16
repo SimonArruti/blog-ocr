@@ -15,7 +15,7 @@ Array.from(button).forEach(function(element) {
 
         document.getElementById("reply_id").value = element.dataset.id
 
-        insertAfter(element, form)
+        insertAfter(element.parentNode, form)
 
         form.style.display = "block"
     });

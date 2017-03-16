@@ -11,7 +11,7 @@ class Post {
         $query = $bdd->connection()->query('
             SELECT id, title, abstract, DATE_FORMAT(published_at, \'%d/%m/%Y, à %Hh%i\') AS date
             FROM posts 
-            ORDER BY date
+            ORDER BY id
             DESC
         ');
         $results = $query->fetchAll(\PDO::FETCH_OBJ);

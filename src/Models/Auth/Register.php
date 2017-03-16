@@ -9,7 +9,6 @@ class Register
     private static $error_password;
 
     public static function registerUser (array $user_data) {
-
         global $bdd;
 
         $name = $user_data['username'];
@@ -18,8 +17,9 @@ class Register
         $c_password = $user_data['c-password'];
 
         $name_check = self::checkIfPseudoExists($name);
-        $email_check = self::checkIfEmailExists($email);
+        $email_check = self::checkIfEmailExistsAndFits($email);
         $password_check = self::checkIfPasswordFit($password, $c_password);
+
 
         if (!$name_check) {
             return array("error_name" => self::$error_pseudo);
@@ -68,16 +68,17 @@ class Register
 
     }
 
-    private static function checkIfEmailExists ($email) {
-
+    private static function checkIfEmailExistsAndFits ($email) {
         global $bdd;
+
+        $regexp = '/^(\s*|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/';
 
         $match_email = $bdd->connection()->prepare('SELECT email FROM users WHERE email = :email');
         $match_email->execute(array("email" => $email));
 
         $result_mail = $match_email->fetch();
 
-        if(!empty($result_mail)) {
+        if(!empty($result_mail) && preg_match($regexp, $email) == 1) {
             self::$error_email = true;
 
             return false;
@@ -91,7 +92,7 @@ class Register
     }
 
     private static function checkIfPasswordFit ($password, $c_password) {
-        $regexp = '/^((?=\S*?[A-Z])(?=\S*?[a-éz])(?=\S*?[0-9]).{8,})\S$/';
+        $regexp = '/^((?=\S*?[A-Z])(?=\S*?[a-éz])(?=\S*?[0-9]).{7,})\S$/';
 
         if (preg_match($regexp, $password) == 1 && $password === $c_password) {
             self::$error_password = false;

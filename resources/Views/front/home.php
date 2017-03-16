@@ -1,27 +1,26 @@
-<h1>Homepage</h1>
+<?php include(__DIR__ . "/../partials/header.php") ?>
+<div class="container-fluid">
+    <div class="col-lg-8 col-md-offset-2">
+        <h1>Accueil</h1>
 
-<?php if (isset($_SESSION['messages']['login_success']['user'])) {
-    echo "<p>" . $_SESSION['messages']['login_success']['user'] . "</p>";
-    $_SESSION['messages']['login_success']['user'] = '';
-} ?>
+        <?php if (isset($_SESSION['messages']['login_success']['user'])) {
+            echo "<p>" . $_SESSION['messages']['login_success']['user'] . "</p>";
+            $_SESSION['messages']['login_success']['user'] = '';
+        } ?>
 
-<div>
-    <?php if (isset($_SESSION['is_online'])) : ?>
-        <strong>Bonjour, <?= $_SESSION['email'] ?></strong>
-        <?php if ($_SESSION['role'] === "admin") : ?>
-            <a href=<?= URL . '/admin' ?>>Administration</a>
-        <?php endif ?>
-        <a href=<?= URL . '/user/'. $_SESSION['user_id'] .'/account' ?>>Mon compte</a>
-        <a href=<?= URL . '/logout' ?>>Déconnexion</a>
-    <?php else : ?>
-        <a href=<?= URL . '/login' ?>>Connexion</a>
-        <a href=<?= URL . '/register' ?>>Inscription</a>
-    <?php endif ?>
+        <?php foreach ($posts as $post) : ?>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3><?= ucfirst($post->title) ?></h3></div>
+                <div class="panel-body">
+                    <p>Résumé: <?= $post->abstract ?></p>
+                    <p>Publié le <?= $post->date ?></p>
+                    <a href="<?= URL . '/posts/' . $post->id ?>">Voir plus</a>
+                </div>
+            </div>
+        <?php endforeach ?>
+    </div>
 </div>
+<?php include(__DIR__ . "/../partials/footer.php") ?>
 
-<?php foreach ($posts as $post) : ?>
-    <h3><?= $post->title ?></h3>
-    <p><?= $post->abstract ?></p>
-    <p>publié le <?= $post->date ?></p>
-    <a href="<?= URL . '/posts/' . $post->id ?>">Voir plus</a>
-<?php endforeach ?>
+
+

@@ -1,21 +1,36 @@
-<h1>Mon compte</h1>
+<?php include(__DIR__ . "/../partials/header.php") ?>
+<div class="container-fluid">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Mon compte</h2>
 
-<p>Modifier vos informations</p>
+        <h5>Modifier vos informations</h5>
 
-<form action="<?= URL . '/user/' . $id . '/account' ?>" method="post">
-    <h2>Changer votre adresse mail</h2>
-    <label>Adresse mail</label>
-    <input type="email" name="email" value="<?= $email->email ?>">
+        <form action="<?= URL . '/user/' . $id . '/account' ?>" method="post">
+            <p class="lead">Changer votre adresse mail</p>
+            <div class="form-group">
+                <label class="control-label">Adresse mail</label>
+                <input class="form-control" type="email" name="email" value="<?= $email->email ?>">
+            </div>
 
-    <h2>Changer votre mot de passe</h2>
-    <label>Votre mot de passe actuel</label>
-    <input type="text" name="old-password">
+            <p class="lead">Changer votre mot de passe</p>
+            <div class="form-group">
+                <label class="control-label">Votre mot de passe actuel</label>
+                <input class="form-control" type="text" name="old-password">
+            </div>
 
-    <label>Nouveau mot de passe</label>
-    <input type="text" name="new-password">
+            <div class="form-group">
+                <label class="control-label">Nouveau mot de passe</label>
+                <input class="form-control" type="text" name="new-password">
+            </div>
 
-    <label>Confirmer le nouveau mot de passe</label>
-    <input type="text" name="c-new-password">
+            <div class="form-group">
+                <label class="control-label">Confirmer le nouveau mot de passe</label>
+                <input class="form-control" type="text" name="c-new-password">
+            </div>
 
-    <button type="submit">Valider</button>
-</form>
+            <button class="btn btn-primary" type="submit">Valider</button>
+        </form>
+    </div>
+</div>
+
+<?php include(__DIR__ . "/../partials/footer.php") ?>

@@ -59,6 +59,12 @@ if ($method === "GET") {
 
             break;
 
+        case $base_uri . "/forgot" :
+            $ctrl = new AuthController();
+            $ctrl->forgot();
+
+            break;
+
         // ---------- ROUTES GET COMMENTS ---------- //
 
         // ---------- ROUTES GET ADMIN ----------- //
@@ -131,9 +137,15 @@ if ($method === "POST") {
 
             break;
 
-        case $base_uri . "/register":
+        case $base_uri . "/register" :
             $ctrl = new AuthController();
             $ctrl->register($_POST);
+
+            break;
+
+        case $base_uri . "/forgot" :
+            $ctrl = new AuthController();
+            $ctrl->sendPassword($_POST);
 
             break;
 

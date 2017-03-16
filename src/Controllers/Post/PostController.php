@@ -31,7 +31,7 @@ class PostController
     public function store (array $data) {
 
         $is_valid_store = GUMP::is_valid($data, array(
-            "title" => "required|min_len,2|min_len,50",
+            "title" => "required|min_len,2|max_len,50",
             "abstract" => "required|min_len,2",
             "content" => "required|min_len,2"
         ));

@@ -1,23 +1,49 @@
-<h1>Connexion</h1>
+<?php include(__DIR__ . "/../partials/header.php") ?>
 
-<?php if (isset($_SESSION['messages']['login_error']) && $_SESSION['messages']['login_error'] != "") {
-    echo "<p>" . $_SESSION['messages']['login_error'] . "</p>";
+<div class="container-fluid">
+    <div class="col-md-6 col-md-offset-3">
+        <h2>Connexion</h2>
 
-    $_SESSION['messages']['login_error'] = "";
-}
-if (isset($_SESSION['messages']['register_success']) && $_SESSION['messages']['register_success']) {
-    echo "<p>" . $_SESSION['messages']['register_success'] . "</p>";
+        <?php
+        if (isset($_SESSION['messages']['login_error']['empty']) && $_SESSION['messages']['login_error']['empty'] != "") {
+            echo "<div class=\"alert alert-dismissible alert-warning\">
+                    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                    <p>" . $_SESSION['messages']['login_error']['empty'] . "</p>
+                </div>";
 
-    $_SESSION['messages']['register_success'] = "";
-}
-?>
+            $_SESSION['messages']['login_error']['empty'] = "";
+        }
+        if (isset($_SESSION['messages']['login_error']['invalid_field']) && $_SESSION['messages']['login_error']['invalid_field'] != "") {
+            echo "<div class=\"alert alert-dismissible alert-warning\">
+                    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                    <p>" . $_SESSION['messages']['login_error']['invalid_field'] . "</p>
+                </div>";
 
-<form action="<?= URL . '/login' ?>"method="post">
-    <label>Email</label>
-    <input type="text" name="email">
+            $_SESSION['messages']['login_error']['invalid_field'] = "";
+        }
+        if (isset($_SESSION['messages']['register_success']) && $_SESSION['messages']['register_success']) {
+            echo "<div class=\"alert alert-dismissible alert-success\">
+                    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                    <p>" . $_SESSION['messages']['register_success'] . "</p>
+                </div>";
 
-    <label>Mot de passe</label>
-    <input type="text" name="password">
+            $_SESSION['messages']['register_success'] = "";
+        }
+        ?>
 
-    <button type="submit">Connexion</button>
-</form>
+        <form action="<?= URL . '/login' ?>" method="post">
+            <div class="form-group">
+                <label class="control-label">Email</label>
+                <input class="form-control" type="text" name="email">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Mot de passe</label>
+                <input class="form-control" type="text" name="password">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Connexion</button>
+        </form>
+    </div>
+</div>
+<?php include(__DIR__ . "/../partials/footer.php") ?>

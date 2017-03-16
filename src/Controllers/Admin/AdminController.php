@@ -10,11 +10,7 @@ class AdminController
     use Helpers;
 
     public function index () {
-        global $bdd;
-        $query = $bdd->connection()->query("SELECT COUNT(*) AS count FROM comments WHERE warning = 1");
-        $result = $query->fetch(\PDO::FETCH_OBJ);
-
-        $count = $result->count;
+        $count = Comment::countWarnComments();
 
         $this->view("admin.dashboard", compact("count"));
     }

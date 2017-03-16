@@ -98,7 +98,8 @@ class Comment
     public static function getWarnComments () {
         global $bdd;
 
-        $query = $bdd->connection()->query("SELECT * FROM comments WHERE warning = 1");
+        $query = $bdd->connection()->query("SELECT id, author, message, DATE_FORMAT(published_at, '%d/%m/%Y, à %Hh%i') 
+            AS date FROM comments WHERE warning = 1");
         $results = $query->fetchAll(\PDO::FETCH_OBJ);
 
         return $results;
@@ -109,5 +110,15 @@ class Comment
 
         $query = $bdd->connection()->prepare("DELETE FROM comments WHERE id = :id");
         $query->execute(array("id" => $id));
+    }
+
+    public static function countWarnComments () {
+        global $bdd;
+        $query = $bdd->connection()->query("SELECT COUNT(*) AS count FROM comments WHERE warning = 1");
+        $result = $query->fetch(\PDO::FETCH_OBJ);
+
+        $count = $result->count;
+
+        return $count;
     }
 }

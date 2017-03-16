@@ -20,6 +20,12 @@ class AuthController
 
     public function register (array $user_data) {
 
+        if (empty($user_data['username']) || empty($user_data['email']) || empty($user_data['password']) || empty("c-password")) {
+            $this->redirect("/register")->withMessage("register_error", "Tous les champs doivent être renseignés.", "empty");
+
+            return;
+        }
+
         $user_data_OK = array(
             "username" => htmlspecialchars($user_data['username']),
             "email" => htmlspecialchars($user_data['email']),
@@ -36,7 +42,7 @@ class AuthController
         }
 
         if (isset($check["error_email"]) && $check['error_email'] === true) {
-            $this->redirect('/register')->withMessage("register_error", "Cette adresse email est déjà utilisée", "email");
+            $this->redirect('/register')->withMessage("register_error", "Cette adresse email est déjà utilisée ou ne correspond pas au bon format.", "email");
 
             return;
         }
@@ -59,6 +65,16 @@ class AuthController
 
     public function login (array $user_data) {
 
+        if (empty($user_data['email']) || empty($user_data['password'])) {
+            //var_dump($user_data);
+            $this->redirect("/login")->withMessage("login_error", "Tous les champs doivent être renseignés.", "empty");
+
+            return;
+        }
+        else {
+            var_dump("coccc");
+        }
+
         $user_data_to_check = array(
             "email" => htmlentities($user_data['email']),
             "password" => htmlentities($user_data['password'])
@@ -67,7 +83,7 @@ class AuthController
         $user = Login::checkLogin($user_data_to_check);
 
         if (empty($user)) {
-            $this->redirect('/login')->withMessage("login_error", "Un des champs renseigné est invalide.");
+            $this->redirect('/login')->withMessage("login_error", "Un des champs renseigné est invalide.", "invalid_field");
         }
         else {
             Login::login($user);
@@ -81,6 +97,10 @@ class AuthController
 
             }
         }
+    }
+
+    public function forgot () {
+        $this->view("auth.forgot");
     }
 
     public function logout () {

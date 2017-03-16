@@ -16,17 +16,6 @@ class User
         $this->email = $email;
     }
 
-    /*public static function getUser ($user_id) {
-        global $bdd;
-
-        $query = $bdd->connection()->prepare('SELECT * from users WHERE id = :id');
-        $query->execute(array("id" => $this->id));
-
-        $user = $query->fetch(\PDO::FETCH_OBJ);
-
-        return $user;
-    }*/
-
     public function getEmail () {
         if ($this->email === '') {
             global $bdd;
@@ -45,13 +34,21 @@ class User
     public function setEmail ($value) {
         global $bdd;
 
-        $query = $bdd->connection()->prepare('UPDATE users SET email = :email WHERE id = :id');
-        $query->execute(array(
-            "email" => $value,
-            "id" => $this->id
-        ));
+        $regexp = '/^(\s*|[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/';
 
-        return true;
+        if (preg_match($regexp, $value)) {
+            $query = $bdd->connection()->prepare('UPDATE users SET email = :email WHERE id = :id');
+            $query->execute(array(
+                "email" => $value,
+                "id" => $this->id
+            ));
+
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
     public function comparePassword ($password) {

@@ -1,22 +1,50 @@
-<h1>Edition du post "<?= $post->title ?>"</h1>
+<?php include(__DIR__ . "/../../partials/header.php") ?>
 
-<?php if (isset($_SESSION['messages']['crud']['update']) && $_SESSION['messages']['crud']['update'] != "") {
-    echo "<p>" . $_SESSION['messages']['crud']['update'] . "</p>";
+<div class="container-fluid">
 
-    $_SESSION['messages']['crud']['update'] = "";
-} ?>
+    <h2>Edition de l'article "<?= $post->title ?>"</h2>
 
-<a href="<?= URL . '/admin/posts/list' ?>">Retour aux posts</a>
+    <?php if (isset($_SESSION['messages']['crud']['update']) && $_SESSION['messages']['crud']['update'] != "") {
+        echo "<p>" . $_SESSION['messages']['crud']['update'] . "</p>";
 
-<form action="<?= URL . "/admin/posts/update/" . $post->id ?>" method="post">
-    <label>Titre</label>
-    <input type="text" name="title" value="<?= $post->title ?>">
+        $_SESSION['messages']['crud']['update'] = "";
+    } ?>
 
-    <label>Résumé</label>
-    <input type="text" name="abstract" value="<?= $post->abstract ?>">
+    <p class="lead"><a href="<?= URL . '/admin/posts/list' ?>">Retour aux posts</a></p>
 
-    <label>Contenu</label>
-    <input type="text" name="content" value="<?= $post->content ?>">
+    <form class="form-horizontal" action="<?= URL . "/admin/posts/update/" . $post->id ?>" method="post">
+        <div class="col-xs-12 col-sm-12 col-md-4">
+            <div class="form-group">
+                <label class="control-label">Titre</label>
+                <input class="form-control" type="text" name="title" value="<?= $post->title ?>">
+            </div>
 
-    <button type="submit">Valider</button>
-</form>
+            <div class="form-group">
+                <label class="control-label">Résumé</label>
+                <textarea class="form-control" name="abstract"><?= $post->abstract ?></textarea>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <label>Contenu</label>
+                <textarea id="content" name="content"><?= $post->content ?></textarea>
+            </div>
+            <p class="text-center">
+                <button class="btn btn-primary" type="submit">Valider</button>
+            </p>
+        </div>
+    </form>
+</div>
+
+<script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script>
+    tinymce.init({
+        selector:'#content',
+        plugins: 'link, preview',
+        height: 400,
+        menubar: false,
+        toolbar: 'undo redo | bold italic underline link | preview | fontselect'
+    });
+</script>
+<?php include(__DIR__ . "/../../partials/footer.php") ?>
