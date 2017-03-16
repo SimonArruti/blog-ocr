@@ -1,7 +1,13 @@
 <?php include(__DIR__ . "/../partials/header.php") ?>
+<div class="jumbotron">
+    <div class="container">
+        <h1>Accueil</h1>
+        <p>Bienvenue sur le site de Jean Forteroche, découvrez ici en avant-première les champitres de mon nouveau livre: "A l'assault de chez Antoine Lucsko"</p>
+        <a class="btn btn-primary" href="<?= URL . '/posts/2' ?>">Lire le premier chapitre !</a>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="col-lg-8 col-md-offset-2">
-        <h1>Accueil</h1>
 
         <?php if (isset($_SESSION['messages']['login_success']['user'])) {
             echo "<p>" . $_SESSION['messages']['login_success']['user'] . "</p>";
