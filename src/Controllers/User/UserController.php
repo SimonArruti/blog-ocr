@@ -15,39 +15,61 @@ class UserController
 
         if (isset($_SESSION['is_online'])) {
 
-            if (isset($data['email'])) {
+            //var_dump(!empty($data['email'])); die;
+
+            if (!empty($data['email']) && $data['email'] === $_SESSION['email']) {
+                //var_dump("ejnfdsf");
+
+                if (!empty($data['old-password']) && !empty($data['new-password']) && !empty($data['c-new-password'])) {
+                    //var_dump("gggggg"); die;
+
+                    $old_password = htmlentities($data['old-password']);
+                    $new_password = htmlentities($data['new-password']);
+                    $c_new_password = htmlentities($data['c-new-password']);
+
+                    $modify_password = $this->modify_password($old_password, $new_password, $c_new_password);
+
+                    if ($modify_password) {
+                        $this->redirect("/")->withMessage("account", "Les informations ont bien été prises en compte.", "success_password");
+                    }
+                    else {
+                        $this->redirect("/user/" . $_SESSION['user_id'] . "/account")->withMessage("account", "Les champs de mots de passe doivent être renseignés et correspondre aux restrictions.", "error_password");
+                    }
+                }
+                else {
+                    $this->redirect("/user/" . $_SESSION['user_id'] . "/account");
+                }
+            }
+            else if (!empty($data['email']) && $data['email'] != $_SESSION['email']) {
                 $email = $data['email'];
                 $user = new User($_SESSION['user_id']);
                 $user->setEmail($email);
 
                 $_SESSION['email'] = $email;
 
-                $this->redirect("/");
-            }
+                if (!empty($data['old-password']) && !empty($data['new-password']) && !empty($data['c-new-password'])) {
+                    //var_dump("gggggg"); die;
 
-            if (isset($data['old-password']) && isset($data['new-password']) && isset($data['c-new-password'])) {
+                    $old_password = htmlentities($data['old-password']);
+                    $new_password = htmlentities($data['new-password']);
+                    $c_new_password = htmlentities($data['c-new-password']);
 
-                $old_password = htmlentities($data['old-password']);
-                $new_password = htmlentities($data['new-password']);
-                $c_new_password = htmlentities($data['c-new-password']);
+                    $modify_password = $this->modify_password($old_password, $new_password, $c_new_password);
 
-                $modify_password = $this->modify_password($old_password, $new_password, $c_new_password);
-
-                if ($modify_password) {
-                    Login::logout();
-
-                    $this->redirect("/");
+                    if ($modify_password) {
+                        $this->redirect("/")->withMessage("account", "Les informations ont bien été prises en compte.", "success_password");
+                    } else {
+                        $this->redirect("/user/" . $_SESSION['user_id'] . "/account")->withMessage("account", "Les champs de mots de passe doivent être renseignés et correspondre aux restrictions.", "error_password");
+                    }
                 }
                 else {
-                    $this->redirect("/user/" . $_SESSION['user_id'] . "/account");
+                    $this->redirect("/user/" . $_SESSION['user_id'] . "/account")->withMessage("account", "Les informations ont bien été prises en compte.", "success_email");
                 }
-
             }
             else {
-                $this->redirect("/user/" . $_SESSION['user_id'] . "/account");
+                $this->redirect("/user/" . $_SESSION['user_id'] . "/account")->withMessage("account", "Le champ email ne peut pas être vide.", "error_email");
             }
         }
-
     }
 
     private function modify_password ($old_password, $new_password, $c_new_password) {

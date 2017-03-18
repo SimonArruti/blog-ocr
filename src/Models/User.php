@@ -95,7 +95,7 @@ class User
         $regexp = '/^((?=\S*?[A-Z])(?=\S*?[a-éz])(?=\S*?[0-9]).{7,})\S$/';
 
         if (preg_match($regexp, $password) == 1 && $password == $c_password) {
-            var_dump("coucou");
+            var_dump("cou");
             return true;
         }
         else {

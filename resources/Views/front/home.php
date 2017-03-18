@@ -1,6 +1,18 @@
 <?php include(__DIR__ . "/../partials/header.php") ?>
+<?php var_dump($_SESSION) ?>
 <div class="jumbotron">
     <div class="container">
+        <?php if (isset($_SESSION['messages']['account']['success_password']) && $_SESSION['messages']['account']['success_password'] != "") {
+
+            echo "<div class=\"alert alert-dismissible alert-success\">
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <p>" . $_SESSION['messages']['account']['success_password'] . "</p>
+                    </div>";
+
+            $_SESSION['messages']['account']['success_password'] = "";
+        }
+
+        ?>
         <h1>Accueil</h1>
         <p>Bienvenue sur le site de Jean Forteroche, découvrez ici en avant-première les champitres de mon nouveau livre: "A l'assault de chez Antoine Lucsko"</p>
         <a class="btn btn-primary" href="<?= URL . '/posts/2' ?>">Lire le premier chapitre !</a>

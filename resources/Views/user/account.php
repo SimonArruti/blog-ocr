@@ -1,7 +1,35 @@
 <?php include(__DIR__ . "/../partials/header.php") ?>
+<?php var_dump($_SESSION) ?>
 <div class="container-fluid">
     <div class="col-md-6 col-md-offset-3">
         <h2>Mon compte</h2>
+
+        <?php
+        if (isset($_SESSION['messages']['account']['success_email']) && $_SESSION['messages']['account']['success_email'] != "") {
+            echo "<div class=\"alert alert-dismissible alert-success\">
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <p>" . $_SESSION['messages']['account']['success_email'] . "</p>
+                    </div>";
+
+            $_SESSION['messages']['account']['success_email'] = "";
+        }
+        if (isset($_SESSION['messages']['account']['error_email']) && $_SESSION['messages']['account']['error_email'] != "") {
+            echo "<div class=\"alert alert-dismissible alert-warning\">
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <p>" . $_SESSION['messages']['account']['error_email'] . "</p>
+                    </div>";
+
+            $_SESSION['messages']['account']['error_email'] = "";
+        }
+        if (isset($_SESSION['messages']['account']['error_password']) && $_SESSION['messages']['account']['error_password'] != "") {
+            echo "<div class=\"alert alert-dismissible alert-warning\">
+                        <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>
+                        <p>" . $_SESSION['messages']['account']['error_password'] . "</p>
+                    </div>";
+
+            $_SESSION['messages']['account']['error_password'] = "";
+        }
+        ?>
 
         <h5>Modifier vos informations</h5>
 
