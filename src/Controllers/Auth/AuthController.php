@@ -103,6 +103,22 @@ class AuthController
         $this->view("auth.forgot");
     }
 
+    public function sendPassword (array $data) {
+        $email = $data['email'];
+        if (Login::checkEmail($email)) {
+            $change_password = Login::sendTempPassword($email);
+
+            if ($change_password) {
+                $this->redirect("/forgot")->withMessage("forgot", "Un email contenant un mot de passe temporaire et des instructions vient d'être envoyé sur votre boîte mail.", "send_success");
+            }
+        }
+        else {
+            $this->redirect("/forgot")->withMessage("forgot", "L'adresse email entrée n'existe pas.", "wrong_email");
+        }
+
+
+    }
+
     public function logout () {
         Login::logout();
 

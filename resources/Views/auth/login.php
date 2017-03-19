@@ -41,9 +41,10 @@
                 <label class="control-label">Mot de passe</label>
                 <input class="form-control" type="text" name="password">
             </div>
-
+            <p><a href="<?= URL . '/forgot' ?>">Mot de passe oublié ?</a></p>
             <button class="btn btn-primary" type="submit">Connexion</button>
         </form>
+
     </div>
 </div>
 <?php include(__DIR__ . "/../partials/footer.php") ?>

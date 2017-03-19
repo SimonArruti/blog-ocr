@@ -12,6 +12,7 @@
         }
     },
     "require": {
-        "wixel/gump": "dev-master"
+        "wixel/gump": "dev-master",
+        "swiftmailer/swiftmailer": "^5.4"
     }
 }
