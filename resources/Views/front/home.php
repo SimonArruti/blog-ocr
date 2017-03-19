@@ -19,7 +19,7 @@
 
             $_SESSION['messages']['login_success']['user'] = "";
 
-        }
+            }
 
         ?>
         <h1>Accueil</h1>

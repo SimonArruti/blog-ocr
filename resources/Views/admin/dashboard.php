@@ -17,7 +17,7 @@
         <a class="list-group-item" href="<?= URL . '/admin/posts/create' ?>">Créer</a>
         <a class="list-group-item" href="<?= URL . '/admin/posts/list' ?>">Liste des posts</a>
         <a class="list-group-item" href="<?= URL . '/admin/posts/comments' ?>">Commentaire signalés
-            <?php if ($count != 0) echo "<span class='badge'>" . $count . "</span>" ?>
+            <span class='badge'><?= $count != 0 ? $count : 0 ?></span>
         </a>
     </div>
 </div>
