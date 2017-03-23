@@ -111,8 +111,20 @@ if ($method === "GET") {
             break;
 
         case preg_match('#' . $admin_uri . '/(posts\/comments)#', $uri) == 1 :
-            $ctrl = new AdminController();
-            $ctrl->comments();
+            $is_admin = $admin_middleware->handleAdmin();
+            if ($is_admin) {
+                $ctrl = new AdminController();
+                $ctrl->comments();
+            }
+
+            break;
+
+        case preg_match('#' . $admin_uri . '/users#', $uri) == 1 :
+            $is_admin = $admin_middleware->handleAdmin();
+            if ($is_admin) {
+                $ctrl = new AdminController();
+                $ctrl->users();
+            }
 
             break;
     }
@@ -212,6 +224,24 @@ if ($method === "POST") {
             if ($is_admin) {
                 $ctrl = new CommentController();
                 $ctrl->restore($matched[2]);
+            }
+
+            break;
+
+        case preg_match('#' . $admin_uri . '/(users\/ban\/([1-9][0-9]*))#', $uri, $matched) == 1 :
+            $is_admin = $admin_middleware->handleAdmin();
+            if ($is_admin) {
+                $ctrl = new AdminController();
+                $ctrl->banUser($matched[2]);
+            }
+
+            break;
+
+            case preg_match('#' . $admin_uri . '/(users\/unban\/([1-9][0-9]*))#', $uri, $matched) == 1 :
+            $is_admin = $admin_middleware->handleAdmin();
+            if ($is_admin) {
+                $ctrl = new AdminController();
+                $ctrl->unBanUser($matched[2]);
             }
 
             break;
