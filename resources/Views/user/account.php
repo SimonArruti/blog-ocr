@@ -1,5 +1,5 @@
 <?php include(__DIR__ . "/../partials/header.php") ?>
-<?php var_dump($_SESSION) ?>
+
 <div class="container-fluid">
     <div class="col-md-6 col-md-offset-3">
         <h2>Mon compte</h2>

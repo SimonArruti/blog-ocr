@@ -1,6 +1,9 @@
 <?php include(__DIR__ . "/../partials/header.php") ?>
 <div class="container-fluid">
     <h2>Liste des utilisateurs</h2>
+
+    <p class="lead"><a href="<?= URL . '/admin/posts' ?>">Retour au site</a></p>
+
     <div class="col-md-10 col-md-offset-1">
 
         <?php
