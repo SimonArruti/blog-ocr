@@ -16,7 +16,7 @@ class Comment
         global $bdd;
 
         $query = $bdd->connection()->prepare('
-            SELECT id, author, message, reply_id, DATE_FORMAT(published_at, \'%d/%m/%Y, à %Hh%i\') 
+            SELECT id, author, message, reply_id, depth, DATE_FORMAT(published_at, \'%d/%m/%Y, à %Hh%i\') 
             AS date 
             FROM comments 
             WHERE post_id = :id 
@@ -55,7 +55,7 @@ class Comment
     public static function addComment ($user_id, $post_id, $user, $message) {
         global $bdd;
 
-        $query = $bdd->connection()->prepare("INSERT INTO comments(user_id, post_id, author, message, published_at) VALUES (:userid, :postid, :author, :message, NOW())");
+        $query = $bdd->connection()->prepare("INSERT INTO comments(user_id, post_id, author, message, published_at, depth) VALUES (:userid, :postid, :author, :message, NOW(), 1)");
 
         $query->execute(array(
             "userid" => $user_id,
@@ -68,15 +68,26 @@ class Comment
 
     public static function addReplyToComment ($user_id, $post_id, $reply_id, $user, $message) {
         global $bdd;
+        $depth = 2;
 
-        $query = $bdd->connection()->prepare("INSERT INTO comments(user_id, post_id, reply_id, author, message, published_at) VALUES (:userid, :postid, :replyid, :author, :message, NOW())");
+        $reply_query = $bdd->connection()->prepare("SELECT * FROM comments WHERE id = :replyid");
+        $reply_query->execute(array("replyid" => $reply_id));
+
+        $reply = $reply_query->fetch(\PDO::FETCH_OBJ);
+
+        if ($reply->depth == 2) {
+            $depth = 3;
+        }
+
+        $query = $bdd->connection()->prepare("INSERT INTO comments(user_id, post_id, reply_id, author, message, published_at, depth) VALUES (:userid, :postid, :replyid, :author, :message, NOW(), :depth)");
 
         $query->execute(array(
             "userid" => $user_id,
             "postid" => $post_id,
             "replyid" => $reply_id,
             "author" => $user,
-            "message" => $message
+            "message" => $message,
+            "depth" => $depth
         ));
     }
 

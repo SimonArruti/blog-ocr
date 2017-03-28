@@ -14,7 +14,7 @@ class FrontController
     public function index () {
         $posts = Post::getAllPosts();
 
-        $this->view('front.home', compact("posts", "ip"));
+        $this->view('front.home', compact("posts"));
     }
 
     public function show ($id) {

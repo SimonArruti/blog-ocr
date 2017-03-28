@@ -12,7 +12,9 @@
 
             <form id="form-comment" action="<?= URL . '/comments/warn/' . $post->id . '/' . $comment->id ?>" method="post">
                 <p class="text-right">
-                    <button type="submit" class="reply btn btn-default" data-id="<?= $comment->id ?>">Répondre</button>
+                    <?php if ($comment->depth != 3) : ?>
+                        <button type="submit" class="reply btn btn-default" data-id="<?= $comment->id ?>">Répondre</button>
+                    <?php endif; ?>
                     <button class="btn btn-info" type="submit">Signaler le commentaire</button>
                 </p>
             </form>
