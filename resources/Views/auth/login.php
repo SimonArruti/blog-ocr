@@ -39,7 +39,7 @@
 
             <div class="form-group">
                 <label class="control-label">Mot de passe</label>
-                <input class="form-control" type="text" name="password">
+                <input class="form-control" type="password" name="password">
             </div>
             <p><a href="<?= URL . '/forgot' ?>">Mot de passe oublié ?</a></p>
             <button class="btn btn-primary" type="submit">Connexion</button>

@@ -127,6 +127,11 @@ if ($method === "GET") {
             }
 
             break;
+
+
+        default :
+            $ctrl = new FrontController();
+            $ctrl->notFound();
     }
 
 }

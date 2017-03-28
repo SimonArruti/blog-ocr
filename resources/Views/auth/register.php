@@ -51,12 +51,12 @@
 
             <div class="form-group">
                 <label class="control-label">Mot de passe</label>
-                <input class="form-control" type="text" name="password">
+                <input class="form-control" type="password" name="password">
             </div>
 
             <div class="form-group">
                 <label class="control-label">Confirmation de mot de passe</label>
-                <input class="form-control" type="text" name="c-password">
+                <input class="form-control" type="password" name="c-password">
             </div>
 
             <button class="btn btn-primary" type="submit">Valider</button>

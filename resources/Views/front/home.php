@@ -23,8 +23,8 @@
 
         ?>
         <h1>Accueil</h1>
-        <p>Bienvenue sur le site de Jean Forteroche, découvrez ici en avant-première les chapitres de mon nouveau livre: "A l'assault de chez Antoine Lucsko"</p>
-        <a class="btn btn-primary" href="<?= URL . '/posts/2' ?>">Lire le premier chapitre !</a>
+        <p>Bienvenue sur le site de Jean Forteroche, découvrez ici en avant-première les chapitres de mon nouveau livre: "One Punch Man !"</p>
+        <a class="btn btn-primary" href="<?= URL . '/posts/14' ?>">Lire le premier chapitre !</a>
     </div>
 </div>
 <div class="container-fluid">

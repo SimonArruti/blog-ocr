@@ -19,9 +19,14 @@ class FrontController
 
     public function show ($id) {
         $post = Post::getSinglePost($id);
-        $comments = Comment::getAllCommentsWithChildren($id);
+        if (!$post) {
+            $this->notFound();
+        }
+        else {
+            $comments = Comment::getAllCommentsWithChildren($id);
 
-        $this->view('front.show', compact("post", "comments"));
+            $this->view('front.show', compact("post", "comments"));
+        }
     }
 
     public function account ($id) {
@@ -32,5 +37,7 @@ class FrontController
 
     }
 
-    // todo page about
+    public function notFound () {
+        $this->view("front.404");
+    }
 }

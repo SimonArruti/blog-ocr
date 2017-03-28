@@ -43,17 +43,17 @@
             <p class="lead">Changer votre mot de passe</p>
             <div class="form-group">
                 <label class="control-label">Votre mot de passe actuel</label>
-                <input class="form-control" type="text" name="old-password">
+                <input class="form-control" type="password" name="old-password">
             </div>
 
             <div class="form-group">
                 <label class="control-label">Nouveau mot de passe</label>
-                <input class="form-control" type="text" name="new-password">
+                <input class="form-control" type="password" name="new-password">
             </div>
 
             <div class="form-group">
                 <label class="control-label">Confirmer le nouveau mot de passe</label>
-                <input class="form-control" type="text" name="c-new-password">
+                <input class="form-control" type="password" name="c-new-password">
             </div>
 
             <button class="btn btn-primary" type="submit">Valider</button>
